@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const fs = require('fs');
 const path = require('path');
-const { GoogleGenerativeAI } = require('@google/generative-ai'); // Import Gemini SDK
+const { GoogleGenerativeAI } = require('@google/generative-ai'); // Import Gemini SDK for gen ai 
 const app = express();
 
 app.use(cors());
