@@ -1,0 +1,50 @@
+[
+  {
+    "commentId": "1",
+    "postId": "1",
+    "userId": "user123",
+    "userName": "John Doe",
+    "comment": "Great post! Looking forward to this event.",
+    "createdAt": "2025-01-27T10:00:00.000Z"
+  },
+  {
+    "commentId": "2",
+    "postId": "1",
+    "userId": "user456",
+    "userName": "Jane Smith",
+    "comment": "Count me in!",
+    "createdAt": "2025-01-27T10:15:00.000Z"
+  },
+  {
+    "commentId": "3",
+    "postId": "2",
+    "userId": "user789",
+    "userName": "Alice Johnson",
+    "comment": "This sounds amazing!",
+    "createdAt": "2025-01-27T11:00:00.000Z"
+  },
+  {
+    "commentId": "1759060848459",
+    "postId": "1759057054057",
+    "userId": "1759000538386",
+    "userName": "a",
+    "comment": "ok",
+    "createdAt": "2025-09-28T12:00:48.459Z"
+  },
+  {
+    "commentId": "1759060854397",
+    "postId": "1759057054057",
+    "userId": "1759000538386",
+    "userName": "a",
+    "comment": "bye",
+    "createdAt": "2025-09-28T12:00:54.397Z"
+  },
+  {
+    "commentId": "1759067933918",
+    "postId": "1759057054057",
+    "userId": "1759067919536",
+    "userName": "ShiivRS 331",
+    "comment": "hi",
+    "createdAt": "2025-09-28T13:58:53.918Z"
+  }
+]

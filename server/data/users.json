@@ -1,0 +1,18 @@
+[
+  {
+    "id": "1758998963233",
+    "name": "abacadaba",
+    "email": "abacadaba@abc.com",
+    "password": "$2a$10$mbBWYhROBnMiimYJGYKNReBnigJAHQCpvmyTtqgU0LqcjY6R9U2vS",
+    "role": "user",
+    "createdAt": "2025-09-27T18:49:23.233Z"
+  },
+  {
+    "id": "1759067919536",
+    "name": "ShiivRS 331",
+    "email": "220701331@rajalakshmi.edu.in",
+    "password": "$2a$10$iXLUobkWpFUtp82PefR/JOEe8gDMkG8NTVsbEbsEiSo1MMLV7offe",
+    "role": "user",
+    "createdAt": "2025-09-28T13:58:39.536Z"
+  }
+]
