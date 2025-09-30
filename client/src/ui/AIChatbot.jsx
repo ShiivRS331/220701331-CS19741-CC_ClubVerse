@@ -111,8 +111,17 @@ const MessageBubble = styled.div`
   background: ${props => props.isUser ? '#007bff' : '#e9ecef'};
   color: ${props => props.isUser ? 'white' : '#333'};
   font-size: 14px;
-  line-height: 1.4;
+  line-height: 1.6;
   word-wrap: break-word;
+  white-space: pre-wrap;
+
+  strong {
+    font-weight: 600;
+  }
+
+  br {
+    margin-bottom: 8px;
+  }
 `;
 
 const InputContainer = styled.div`
@@ -219,9 +228,9 @@ const AIChatbot = () => {
         },
         body: JSON.stringify({
           message: userMessage,
-          conversationHistory: messages.map(msg => ({ 
-            role: msg.isUser ? 'user' : 'assistant', 
-            content: msg.text 
+          conversationHistory: messages.map(msg => ({
+            role: msg.isUser ? 'user' : 'assistant',
+            content: msg.text
           }))
         })
       });
@@ -237,9 +246,9 @@ const AIChatbot = () => {
     } catch (error) {
       console.error('Chat error:', error);
       setError(error.message);
-      setMessages([...newMessages, { 
-        text: 'Sorry, I encountered an error. Please try again later.', 
-        isUser: false 
+      setMessages([...newMessages, {
+        text: 'Sorry, I encountered an error. Please try again later.',
+        isUser: false
       }]);
     } finally {
       setIsLoading(false);
@@ -256,9 +265,9 @@ const AIChatbot = () => {
   const toggleChat = () => {
     setIsOpen(!isOpen);
     if (!isOpen && messages.length === 0) {
-      setMessages([{ 
-        text: "Hello! I'm your AI assistant. How can I help you with ClubVerse today?", 
-        isUser: false 
+      setMessages([{
+        text: "Hello! I'm your AI assistant. How can I help you with ClubVerse today?",
+        isUser: false
       }]);
     }
   };
@@ -268,7 +277,7 @@ const AIChatbot = () => {
       <ChatToggleButton onClick={toggleChat}>
         {isOpen ? '✕' : '🤖'}
       </ChatToggleButton>
-      
+
       {isOpen && (
         <ChatModal>
           <ChatHeader>
@@ -277,7 +286,7 @@ const AIChatbot = () => {
               ×
             </CloseButton>
           </ChatHeader>
-          
+
           <ChatBody>
             <MessagesContainer>
               {messages.length === 0 ? (
@@ -287,9 +296,13 @@ const AIChatbot = () => {
               ) : (
                 messages.map((message, index) => (
                   <Message key={index} isUser={message.isUser}>
-                    <MessageBubble isUser={message.isUser}>
-                      {message.text}
+                    <MessageBubble
+                      isUser={message.isUser}
+                      dangerouslySetInnerHTML={!message.isUser ? { __html: message.text } : undefined}
+                    >
+                      {message.isUser ? message.text : null}
                     </MessageBubble>
+
                   </Message>
                 ))
               )}
@@ -307,7 +320,7 @@ const AIChatbot = () => {
               )}
               <div ref={messagesEndRef} />
             </MessagesContainer>
-            
+
             <InputContainer>
               <InputWrapper>
                 <MessageInput
@@ -318,7 +331,7 @@ const AIChatbot = () => {
                   placeholder="Type your message..."
                   disabled={isLoading}
                 />
-                <SendButton 
+                <SendButton
                   onClick={handleSendMessage}
                   disabled={isLoading || !inputMessage.trim()}
                 >
