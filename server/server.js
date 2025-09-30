@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const fs = require('fs');
 const path = require('path');
-const { GoogleGenerativeAI } = require('@google/generative-ai'); // Import Gemini SDK for gen ai 
+const { GoogleGenerativeAI } = require('@google/generative-ai'); // Import Gemini SDK
 const app = express();
 
 app.use(cors());
@@ -143,13 +143,13 @@ const authenticateToken = (req, res, next) => {
 // Generate JWT token
 const generateToken = (user) => {
   return jwt.sign(
-    { 
-      id: user.id, 
-      email: user.email, 
+    {
+      id: user.id,
+      email: user.email,
       role: user.role,
-      name: user.name 
-    }, 
-    JWT_SECRET, 
+      name: user.name
+    },
+    JWT_SECRET,
     { expiresIn: '24h' }
   );
 };
@@ -158,7 +158,7 @@ const generateToken = (user) => {
 app.post('/register', async (req, res) => {
   try {
     const { name, email, password } = req.body;
-    
+
     if (!name || !email || !password) {
       return res.status(400).json({ auth: false, error: 'All fields are required.' });
     }
@@ -187,9 +187,9 @@ app.post('/register', async (req, res) => {
 
     // Return user data (without password) - no token for registration
     const { password: _, ...userWithoutPassword } = newUser;
-    
-    res.status(201).json({ 
-      auth: true, 
+
+    res.status(201).json({
+      auth: true,
       user: userWithoutPassword,
       message: 'User registered successfully'
     });
@@ -202,7 +202,7 @@ app.post('/register', async (req, res) => {
 app.post('/super/createAdmin', async (req, res) => {
   try {
     const { name, email, password, clubName, securityKey } = req.body;
-    
+
     if (!name || !email || !password || !clubName || !securityKey) {
       return res.status(400).json({ auth: false, error: 'All fields are required.' });
     }
@@ -240,10 +240,10 @@ app.post('/super/createAdmin', async (req, res) => {
 
     // Return admin data (without password)
     const { password: _, ...adminWithoutPassword } = newAdmin;
-    
-    res.status(201).json({ 
-      auth: true, 
-      user: adminWithoutPassword, 
+
+    res.status(201).json({
+      auth: true,
+      user: adminWithoutPassword,
       token,
       message: 'Admin created successfully'
     });
@@ -259,7 +259,7 @@ app.post('/login', async (req, res) => {
     console.log('Login attempt:', { email, role });
     console.log('Current users:', users.length);
     console.log('Current admins:', admins.length);
-    
+
     if (!email || !password || !role) {
       return res.status(400).json({ auth: false, error: 'All fields are required.' });
     }
@@ -290,11 +290,11 @@ app.post('/login', async (req, res) => {
 
     // Return user data (without password)
     const { password: _, ...userWithoutPassword } = user;
-    
-    res.json({ 
-      auth: true, 
-      user: userWithoutPassword, 
-      token 
+
+    res.json({
+      auth: true,
+      user: userWithoutPassword,
+      token
     });
   } catch (error) {
     res.status(500).json({ auth: false, error: 'Server error during login' });
@@ -454,7 +454,7 @@ app.post('/user/saveUserPost', authenticateToken, (req, res) => {
 // Get comments for a post
 app.get('/user/comment/getComments/:postId', authenticateToken, (req, res) => {
   const { postId } = req.params;
-  
+
   // Get comments for this specific post
   const postComments = comments
     .filter(comment => comment.postId === postId)
@@ -466,7 +466,7 @@ app.get('/user/comment/getComments/:postId', authenticateToken, (req, res) => {
       date: comment.createdAt
     }))
     .sort((a, b) => new Date(a.date) - new Date(b.date)); // Sort by date
-  
+
   res.json(postComments);
 });
 
@@ -474,7 +474,7 @@ app.get('/user/comment/getComments/:postId', authenticateToken, (req, res) => {
 app.post('/user/comment/addComment/:postId', authenticateToken, (req, res) => {
   const { postId } = req.params;
   const { userId, name, comment } = req.body;
-  
+
   if (!userId || !name || !comment) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
@@ -492,8 +492,8 @@ app.post('/user/comment/addComment/:postId', authenticateToken, (req, res) => {
   comments.push(newComment);
   saveComments();
 
-  res.json({ 
-    success: true, 
+  res.json({
+    success: true,
     message: 'Comment added successfully',
     comment: {
       _id: newComment.commentId,
@@ -510,7 +510,7 @@ app.delete('/user/comment/deleteComment/:commentId', authenticateToken, (req, re
   const { commentId } = req.params;
   const userId = req.user.id;
 
-  const commentIndex = comments.findIndex(comment => 
+  const commentIndex = comments.findIndex(comment =>
     comment.commentId === commentId && comment.userId === userId
   );
 
@@ -525,15 +525,15 @@ app.delete('/user/comment/deleteComment/:commentId', authenticateToken, (req, re
 });
 
 // Initialize Gemini
-const GEMINI_API_KEY = 'AIzaSyDIOJIe9nfg_P5TFW4T1TvoRQtiT8Ha_Bs'; // <--- REPLACE THIS WITH YOUR ACTUAL GEMINI API KEY --DONE
+const GEMINI_API_KEY = 'AIzaSyDIOJIe9nfg_P5TFW4T1TvoRQtiT8Ha_Bs'; // <--- REPLACE THIS WITH YOUR ACTUAL GEMINI API KEY
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 // FIX 1: Use a current model name like 'gemini-2.5-flash'
-const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' }); 
+const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
 // AI Summarization endpoint (using Gemini)
 app.post('/user/summarize-post', authenticateToken, async (req, res) => {
   const { postTitle, postDescription, coordinators } = req.body;
-  
+
   if (!postTitle || !postDescription) {
     return res.status(400).json({ error: 'Post title and description are required' });
   }
@@ -551,14 +551,14 @@ Please summarize the key points, main activities, and important details in 2-3 s
     const response = await result.response;
     const summary = response.text();
 
-    res.json({ 
-      success: true, 
-      summary: summary 
+    res.json({
+      success: true,
+      summary: summary
     });
   } catch (error) {
     console.error('Gemini API Error (Summarization):', error);
-    res.status(500).json({ 
-      success: false, 
+    res.status(500).json({
+      success: false,
       error: 'Failed to generate summary. Please try again later.',
       details: error.message
     });
@@ -568,56 +568,80 @@ Please summarize the key points, main activities, and important details in 2-3 s
 // AI Chat endpoint (using Gemini)
 app.post('/user/ai-chat', authenticateToken, async (req, res) => {
   const { message, conversationHistory = [] } = req.body;
-  
+
   if (!message) {
     return res.status(400).json({ error: 'Message is required' });
   }
-  
-  // Define the system instruction (moved out of the history array)
+
+  console.log("Received chat message:", message);
+  console.log("Conversation history:", conversationHistory);
+
   const systemInstructionText = 'You are a helpful AI assistant for ClubVerse, a platform for college clubs and organizations. Help users with questions about clubs, events, and general information. Keep responses concise and helpful.';
 
-  // Map conversation history to Gemini's format ('user' or 'model')
-  const historyForGemini = conversationHistory.map(entry => ({
-    role: entry.role === 'user' ? 'user' : 'model', // Gemini expects 'user' or 'model'
-    parts: [{ text: entry.content || '' }]
-  }));
+  // ✅ Formatter to convert Markdown to HTML
+  function formatToHTML(text) {
+    return text
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // bold
+      .replace(/\*\s*/g, '<br>• ')                      // bullets
+      .replace(/-\s*(\w+ Club:)/g, '<br><br><strong>$1</strong>') // section headers
+      .replace(/\n{2,}/g, '<br><br>')                   // spacing
+      .replace(/\n/g, '<br>')                           // single line breaks
+      .trim();
+  }
 
   try {
-    // FIX 2: Pass systemInstruction in the config, and use historyForGemini directly
-    const chat = model.startChat({
-      history: historyForGemini,
-      config: {
-        systemInstruction: systemInstructionText, // System instruction goes here
-        maxOutputTokens: 1000,
+    const cleanedHistory = conversationHistory
+      .filter(entry => entry.role === 'user' || entry.role === 'assistant')
+      .map(entry => ({
+        role: entry.role === 'assistant' ? 'model' : 'user',
+        parts: [{ text: entry.content }]
+      }));
+
+    if (cleanedHistory.length > 0 && cleanedHistory[0].role !== 'user') {
+      console.log('⚠️ History started with assistant; removing it to comply with Gemini');
+      cleanedHistory.shift();
+    }
+
+    const chatSession = await model.startChat({
+      history: cleanedHistory,
+      systemInstruction: {
+        parts: [{ text: systemInstructionText }]
+      },
+      generationConfig: {
         temperature: 0.7,
+        maxOutputTokens: 1000,
       },
     });
 
-    const result = await chat.sendMessage(message); // message is assumed to be the user's latest text string
+    const result = await chatSession.sendMessage(message);
     const response = await result.response;
-    const aiResponse = response.text();
+    const rawResponse = response.text();
+    const formattedResponse = formatToHTML(rawResponse);
 
-    res.json({ 
-      success: true, 
-      response: aiResponse 
+    console.log("AI response:", formattedResponse);
+
+    res.json({
+      success: true,
+      response: formattedResponse
     });
   } catch (error) {
     console.error('Gemini Chat API Error:', error);
-    res.status(500).json({ 
-      success: false, 
+    res.status(500).json({
+      success: false,
       error: 'Failed to get AI response. Please try again later.',
       details: error.message
     });
   }
 });
 
+
 // Join club form submission
 app.post('/user/joinClub', authenticateToken, (req, res) => {
   const { clubName, reason, contactInfo } = req.body;
-  
+
   // Mock response for now
-  res.json({ 
-    success: true, 
+  res.json({
+    success: true,
     message: 'Join request submitted successfully',
     clubName,
     reason,
