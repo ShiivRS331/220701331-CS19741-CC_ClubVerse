@@ -525,7 +525,7 @@ app.delete('/user/comment/deleteComment/:commentId', authenticateToken, (req, re
 });
 
 // Initialize Gemini
-const GEMINI_API_KEY = 'AIzaSyDIOJIe9nfg_P5TFW4T1TvoRQtiT8Ha_Bs'; // <--- REPLACE THIS WITH YOUR ACTUAL GEMINI API KEY
+const GEMINI_API_KEY = 'YOUR_API_KEY'; // <--- REPLACE THIS WITH YOUR ACTUAL GEMINI API KEY
 const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
 // FIX 1: Use a current model name like 'gemini-2.5-flash'
 const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
