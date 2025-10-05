@@ -1,0 +1,105 @@
+[
+  {
+    "_id": "1759057054057",
+    "adminID": "1759000538386",
+    "clubName": "aa",
+    "title": "iot",
+    "description": "iooot ",
+    "coordinators": [
+      {
+        "name": "sh",
+        "email": "sh@gmail.com",
+        "phone": "123445"
+      }
+    ],
+    "image": null,
+    "createdAt": "2025-09-28T10:57:34.057Z",
+    "updatedAt": "2025-09-28T10:57:59.260Z"
+  },
+  {
+    "_id": "1759055853268",
+    "adminID": "1759000538386",
+    "clubName": "aa",
+    "title": "o",
+    "description": "jhdbiyebdiubweifubiwebdiweiviwevfivweifviuwevfiuvwieufviuwevfiuvweiufviuwevfiuvweiufvwiuevfiuwvefuivweiufviuwveibjhsdbcksvefyvaksejbcawebfciuawveifvsadcbwevfyvajkwefvkjahvkcvyvyvwuebiaugeiuf",
+    "coordinators": [
+      {
+        "name": "sh",
+        "email": "sh@gmail.com",
+        "phone": "123445"
+      }
+    ],
+    "createdAt": "2025-09-28T10:37:33.268Z",
+    "image": null
+  },
+  {
+    "_id": "1759055587369",
+    "adminID": "1759000538386",
+    "clubName": "aa",
+    "title": "a",
+    "description": "aaaa",
+    "coordinators": [
+      {
+        "name": "sh",
+        "email": "sh@gmail.com",
+        "phone": "123445"
+      }
+    ],
+    "createdAt": "2025-09-28T10:33:07.369Z",
+    "image": null
+  },
+  {
+    "_id": "1759055372579",
+    "adminID": "1759000538386",
+    "clubName": "aa",
+    "title": "a",
+    "description": "hello",
+    "coordinators": [
+      {
+        "name": "a",
+        "email": "aa@aa.com",
+        "phone": "123445"
+      }
+    ],
+    "createdAt": "2025-09-28T10:29:32.579Z",
+    "updatedAt": "2025-09-28T10:32:20.761Z",
+    "image": null
+  },
+  {
+    "_id": "1",
+    "adminID": "1759000538386",
+    "clubName": "Tech Club",
+    "title": "Welcome to ClubVerse",
+    "description": "This is a sample club post for testing purposes.",
+    "coordinators": [
+      {
+        "name": "John Doe",
+        "email": "john@example.com",
+        "phone": "123-456-7890"
+      },
+      {
+        "name": "Jane Smith",
+        "email": "jane@example.com",
+        "phone": "098-765-4321"
+      }
+    ],
+    "createdAt": "2025-01-27T10:00:00.000Z",
+    "image": null
+  },
+  {
+    "_id": "2",
+    "adminID": "1759000695285",
+    "clubName": "Tech Club",
+    "title": "Upcoming Events",
+    "description": "Join us for our upcoming tech meetup next week!",
+    "coordinators": [
+      {
+        "name": "Alice Johnson",
+        "email": "alice@example.com",
+        "phone": "555-123-4567"
+      }
+    ],
+    "createdAt": "2025-01-27T11:00:00.000Z",
+    "image": null
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1759000538386",
+    "name": "a",
+    "email": "a@a.in",
+    "password": "$2a$10$7umIoFozzQv5faGmuC3WG.9LOEdi3ikSJ8H2x07jNFr4X1UUQT3VW",
+    "role": "admin",
+    "clubName": "aa",
+    "createdAt": "2025-09-27T19:15:38.386Z"
+  },
+  {
+    "id": "1759000695285",
+    "name": "b",
+    "email": "b@b.in",
+    "password": "$2a$10$gUUbiXPWVyaZu7ElT43ES.f3BOhGjgUWLqGqww3vzu3kP5K/BmTRS",
+    "role": "admin",
+    "clubName": "bb",
+    "createdAt": "2025-09-27T19:18:15.285Z"
+  }
+]
