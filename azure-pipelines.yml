@@ -39,7 +39,7 @@ steps:
 - script: |
     cd terraform
     terraform init
-    terraform plan
+#    terraform plan # need azure subscription for running this command
   displayName: 'Terraform plan (demo)'
 
 # --- Docker Build Steps ---
