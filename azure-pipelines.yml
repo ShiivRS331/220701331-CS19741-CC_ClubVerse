@@ -1,12 +1,9 @@
 trigger:
 - main
 
-<<<<<<< HEAD
 variables:
 - group: ClubVerseSecrets
 
-=======
->>>>>>> 1858c3d6632ee2fc049176a5997340188e12c1c0
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -17,13 +14,6 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
-<<<<<<< HEAD
-=======
-    echo "Gemini API Key is: $(GEMINI_API_KEY)"
-  displayName: 'Show Gemini API Key (for demo - remove in real use)'
-
-- script: |
->>>>>>> 1858c3d6632ee2fc049176a5997340188e12c1c0
     cd client
     npm install
     npm run build
@@ -32,7 +22,6 @@ steps:
 - script: |
     cd server
     npm install
-<<<<<<< HEAD
     # node server.js # (Uncomment to run server in CI)
   displayName: 'Install server dependencies'
   env:
@@ -47,12 +36,19 @@ steps:
     terraform init
     terraform plan
   displayName: 'Terraform plan (demo)'
-=======
-    echo "No tests configured"
-  displayName: 'Install and (optionally) test server'
 
+# --- Docker Build Steps ---
 - script: |
-    docker build -t clubverse-client ./client
-    docker build -t clubverse-server ./server
-  displayName: 'Build Docker images (client and server)'
->>>>>>> 1858c3d6632ee2fc049176a5997340188e12c1c0
+    docker build -t clubverse-client:$(Build.BuildId) ./client
+    docker build -t clubverse-server:$(Build.BuildId) ./server
+  displayName: 'Build Docker images for client and server'
+
+# --- (Optional) Docker Push Steps ---
+# To enable pushing, set up Docker Hub or ACR credentials as pipeline secrets and uncomment below:
+# - script: |
+#     echo $(DOCKER_PASSWORD) | docker login -u $(DOCKER_USERNAME) --password-stdin
+#     docker tag clubverse-client:$(Build.BuildId) yourdockerhub/clubverse-client:$(Build.BuildId)
+#     docker tag clubverse-server:$(Build.BuildId) yourdockerhub/clubverse-server:$(Build.BuildId)
+#     docker push yourdockerhub/clubverse-client:$(Build.BuildId)
+#     docker push yourdockerhub/clubverse-server:$(Build.BuildId)
+#   displayName: 'Push Docker images to registry'
