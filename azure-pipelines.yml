@@ -1,9 +1,12 @@
 trigger:
 - main
 
+<<<<<<< HEAD
 variables:
 - group: ClubVerseSecrets
 
+=======
+>>>>>>> 1858c3d6632ee2fc049176a5997340188e12c1c0
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -14,6 +17,13 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+<<<<<<< HEAD
+=======
+    echo "Gemini API Key is: $(GEMINI_API_KEY)"
+  displayName: 'Show Gemini API Key (for demo - remove in real use)'
+
+- script: |
+>>>>>>> 1858c3d6632ee2fc049176a5997340188e12c1c0
     cd client
     npm install
     npm run build
@@ -22,6 +32,7 @@ steps:
 - script: |
     cd server
     npm install
+<<<<<<< HEAD
     # node server.js # (Uncomment to run server in CI)
   displayName: 'Install server dependencies'
   env:
@@ -36,3 +47,12 @@ steps:
     terraform init
     terraform plan
   displayName: 'Terraform plan (demo)'
+=======
+    echo "No tests configured"
+  displayName: 'Install and (optionally) test server'
+
+- script: |
+    docker build -t clubverse-client ./client
+    docker build -t clubverse-server ./server
+  displayName: 'Build Docker images (client and server)'
+>>>>>>> 1858c3d6632ee2fc049176a5997340188e12c1c0
