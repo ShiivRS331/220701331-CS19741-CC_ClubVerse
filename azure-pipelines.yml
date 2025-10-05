@@ -1,0 +1,38 @@
+trigger:
+- main
+
+variables:
+- group: ClubVerseSecrets
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    cd client
+    npm install
+    npm run build
+  displayName: 'Build client'
+
+- script: |
+    cd server
+    npm install
+    # node server.js # (Uncomment to run server in CI)
+  displayName: 'Install server dependencies'
+  env:
+    GEMINI_API_KEY: $(GEMINI_API_KEY)
+
+- script: |
+    echo "Gemini API Key is: $(GEMINI_API_KEY)"
+  displayName: 'Show Gemini API Key (for demo - remove in real use)'
+
+- script: |
+    cd terraform
+    terraform init
+    terraform plan
+  displayName: 'Terraform plan (demo)'
