@@ -11,6 +11,10 @@ steps:
   displayName: 'Install Node.js'
 
 - script: |
+    echo "Gemini API Key is: $(GEMINI_API_KEY)"
+  displayName: 'Show Gemini API Key (for demo - remove in real use)'
+
+- script: |
     cd client
     npm install
     npm run build
