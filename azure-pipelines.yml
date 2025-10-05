@@ -1,0 +1,28 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    cd client
+    npm install
+    npm run build
+  displayName: 'Build client'
+
+- script: |
+    cd server
+    npm install
+    echo "No tests configured"
+  displayName: 'Install and (optionally) test server'
+
+- script: |
+    docker build -t clubverse-client ./client
+    docker build -t clubverse-server ./server
+  displayName: 'Build Docker images (client and server)'
