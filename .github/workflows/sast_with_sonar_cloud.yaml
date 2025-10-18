@@ -7,9 +7,13 @@
 name: "SAST_with_SonarCloud"
 
 on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
   workflow_dispatch:
-    push:
-    branches: [ main ]
 
 jobs:
   sonarcloud:
