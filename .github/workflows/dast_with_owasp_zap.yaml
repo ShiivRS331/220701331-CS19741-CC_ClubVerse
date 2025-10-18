@@ -1,7 +1,7 @@
 name: DAST Scan (OWASP ZAP)
 
 on:
-  workflow_dispatch:  # run manually or trigger on push if you want
+  workflow_dispatch:
 
 jobs:
   dast:
@@ -11,12 +11,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Ensure Docker environment is set up
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      # Start app with Docker Compose
-      - name: Start application containers
+      # Start your app containers
+      - name: Start application with Docker Compose
         run: |
           docker compose up -d
           echo "Waiting for app containers to start..."
@@ -27,14 +26,13 @@ jobs:
       - name: Run OWASP ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.10.0
         with:
-          # Target internal URL (ZAP container will access via Docker network)
-          target: "http://client:80"
-          docker_name: "clubverse_net"   # custom Docker network name (same as in docker-compose.yml)
+          target: "http://client:80"              # internal container URL
+          docker_name: "clubverse_net"            # must match docker-compose network
           rules_file_name: ".zap/rules.tsv"
           cmd_options: "-a -r report_html.html -J report_json.json -w report_md.md"
 
-      # Upload scan reports as artifacts
-      - name: Upload ZAP Scan Reports
+      # Upload reports
+      - name: Upload ZAP Reports
         uses: actions/upload-artifact@v3
         with:
           name: zap-scan-reports
