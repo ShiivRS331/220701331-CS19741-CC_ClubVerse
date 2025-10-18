@@ -8,6 +8,8 @@ name: "SAST_with_SonarCloud"
 
 on:
   workflow_dispatch:
+    push:
+    branches: [ main ]
 
 jobs:
   sonarcloud:
@@ -62,10 +64,9 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.organization=ShiivRS331
+            -Dsonar.organization=shiivrs331
             -Dsonar.projectKey=220701331-CS19741-CC_ClubVerse
-            -Dsonar.sources=client,server
-            -Dsonar.tests=client/src,server
+            -Dsonar.sources=client/src,server
             -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/build/**
             -Dsonar.javascript.lcov.reportPaths=client/coverage/lcov.info,server/coverage/lcov.info
 

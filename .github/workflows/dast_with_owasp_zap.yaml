@@ -1,0 +1,46 @@
+name: DAST Scan - OWASP ZAP
+
+on:
+  workflow_dispatch: # manual trigger
+  push:
+    branches: [ main ]
+
+jobs:
+  zap_scan:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Optional: Build and start your app (adjust these commands)
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      - name: Install dependencies and start app
+        run: |
+          cd client
+          npm install
+          nohup npm start &
+          cd ../server
+          npm install
+          nohup npm start &
+          sleep 20  # wait for app to start
+
+      # 🧪 Run OWASP ZAP Baseline Scan
+      - name: Run OWASP ZAP Baseline Scan
+        uses: zaproxy/action-baseline@v0.10.0
+        with:
+          target: 'http://localhost:3000'  # change to your app URL
+          rules_file_name: '.zap/rules.tsv' # optional custom rules
+          cmd_options: '-a' # active scan mode
+          allow_issue_writing: false
+          fail_action: false
+
+      # 🧾 Upload the scan report
+      - name: Upload ZAP Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: ZAP-DAST-Report
+          path: report_html.html
