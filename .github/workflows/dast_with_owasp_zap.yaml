@@ -1,37 +1,49 @@
-name: DAST Scan - OWASP ZAP
+name: DAST Scan (OWASP ZAP)
 
 on:
-  workflow_dispatch:
-  push:
-    branches: [ main ]
+  workflow_dispatch:  # run manually or trigger on push if you want
 
 jobs:
-  dast_scan:
+  dast:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1 — Checkout your repo
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
-      # Step 2 — Build and run your app using Docker Compose
-      - name: Start app with Docker Compose
+      # Ensure Docker environment is set up
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Start app with Docker Compose
+      - name: Start application containers
         run: |
           docker compose up -d
-          echo "Waiting for services to be ready..."
-          sleep 15  # give containers time to start
+          echo "Waiting for app containers to start..."
+          sleep 25
+          docker ps -a
 
-      # Step 3 — Run OWASP ZAP Baseline DAST Scan
+      # Run OWASP ZAP Baseline Scan
       - name: Run OWASP ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.10.0
         with:
-          target: 'http://localhost:3000'   # change this if your app runs on another port/service
-          cmd_options: '--network=host -a'  # active scan mode + access host network
-          fail_action: false                # set to true if you want pipeline to fail on high-risk issues
+          # Target internal URL (ZAP container will access via Docker network)
+          target: "http://client:80"
+          docker_name: "clubverse_net"   # custom Docker network name (same as in docker-compose.yml)
+          rules_file_name: ".zap/rules.tsv"
+          cmd_options: "-a -r report_html.html -J report_json.json -w report_md.md"
 
-      # Step 4 — Upload the generated ZAP HTML report as a GitHub artifact
-      - name: Upload ZAP Report
-        uses: actions/upload-artifact@v4
+      # Upload scan reports as artifacts
+      - name: Upload ZAP Scan Reports
+        uses: actions/upload-artifact@v3
         with:
-          name: ZAP-DAST-Report
-          path: report_html.html
+          name: zap-scan-reports
+          path: |
+            report_html.html
+            report_json.json
+            report_md.md
+
+      # Stop and clean up containers
+      - name: Tear down Docker containers
+        if: always()
+        run: docker compose down
