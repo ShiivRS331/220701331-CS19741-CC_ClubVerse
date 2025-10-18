@@ -44,10 +44,16 @@ jobs:
       - name: Run OWASP ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.10.0
         with:
-        # http://client:80
-          target: "http://client:80/nonexistent"              # internal container URL with a forced error
+          target: "http://client:80"              # internal container URL with a forced error
           rules_file_name: ".zap/rules.tsv"
           cmd_options: "-config dirs.work.dir=/zap/wrk/ -a -r report_html.html -J report_json.json -w report_md.md"
+
+      # Inject errors into reports manually
+      - name: Inject Errors into Reports
+        run: |
+          echo '{"error": "Manually injected error for testing purposes."}' > report_json.json
+          echo '# Error Report\n\nManually injected error for testing purposes.' > report_md.md
+          echo '<html><head><title>Error Report</title></head><body><h1>Error Report</h1><p>Manually injected error for testing purposes.</p></body></html>' > report_html.html
 
       # Upload reports
       - name: Upload ZAP Reports
