@@ -6,9 +6,6 @@ services:
       - "5173:80"
     depends_on:
       - server
-    networks:
-      - clubverse_net
-
   server:
     build: ./server
     ports:
@@ -19,9 +16,3 @@ services:
       - ./server/data:/app/data
     env_file:
       - ./server/.env
-    networks:
-      - clubverse_net
-
-networks:
-  clubverse_net:
-    driver: bridge
