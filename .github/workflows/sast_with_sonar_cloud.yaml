@@ -5,7 +5,7 @@
 # - Server is in `server/` and may also have `test` scripts that generate LCOV.
 # - You will set `SONAR_TOKEN` in GitHub Secrets, and replace the placeholders below with your SonarCloud org/project.
 
-name: "SAST & SonarCloud"
+name: "SAST_with_SonarCloud"
 
 on:
 	push:
