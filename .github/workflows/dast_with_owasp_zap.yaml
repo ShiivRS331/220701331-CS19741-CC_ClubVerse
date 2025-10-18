@@ -47,7 +47,6 @@ jobs:
           target: "http://client:80"              # internal container URL
           rules_file_name: ".zap/rules.tsv"
           cmd_options: "-a -r report_html.html -J report_json.json -w report_md.md"
-          docker_name: "clubverse_net"
 
       # Upload reports
       - name: Upload ZAP Reports
