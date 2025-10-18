@@ -17,7 +17,7 @@ jobs:
       # Step 2 — Build and run your app using Docker Compose
       - name: Start app with Docker Compose
         run: |
-          docker-compose up -d
+          docker compose up -d
           echo "Waiting for services to be ready..."
           sleep 15  # give containers time to start
 
