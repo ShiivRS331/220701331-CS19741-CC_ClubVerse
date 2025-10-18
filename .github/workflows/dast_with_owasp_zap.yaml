@@ -16,7 +16,7 @@ jobs:
 
       # Create Docker network explicitly
       - name: Create Docker network
-        run: docker network create clubverse_net
+        run: docker network create clubverse_net || echo "Network already exists"
 
       # Start your app containers
       - name: Start application with Docker Compose
