@@ -46,7 +46,7 @@ jobs:
         with:
           target: "http://client:80"              # internal container URL
           rules_file_name: ".zap/rules.tsv"
-          cmd_options: "-a -r report_html.html -J report_json.json -w report_md.md"
+          cmd_options: "-config dirs.work.dir=/zap/wrk/ -a -r report_html.html -J report_json.json -w report_md.md"
 
       # Upload reports
       - name: Upload ZAP Reports
