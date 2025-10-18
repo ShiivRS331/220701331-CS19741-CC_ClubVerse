@@ -63,7 +63,7 @@ jobs:
         with:
           args: >
             -Dsonar.organization=ShiivRS331
-            -Dsonar.projectKey=YOUR_SONARCLOUD_PROJECT_KEY
+            -Dsonar.projectKey=220701331-CS19741-CC_ClubVerse
             -Dsonar.sources=client,server
             -Dsonar.tests=client/src,server
             -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/build/**
