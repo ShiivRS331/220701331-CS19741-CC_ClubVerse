@@ -2,6 +2,8 @@ name: DAST Scan (OWASP ZAP)
 
 on:
   workflow_dispatch:
+      push:
+      branches: [ main ]
 
 jobs:
   dast:
