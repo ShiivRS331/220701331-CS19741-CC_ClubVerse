@@ -1,0 +1,82 @@
+
+# SonarCloud scan for a Node.js monorepo-like project (Vite React client + Node server)
+# Assumptions:
+# - Client is in `client/` and has scripts like `build` and optionally `test` that can produce LCOV coverage.
+# - Server is in `server/` and may also have `test` scripts that generate LCOV.
+# - You will set `SONAR_TOKEN` in GitHub Secrets, and replace the placeholders below with your SonarCloud org/project.
+
+name: "SAST & SonarCloud"
+
+on:
+	push:
+		branches: [ main ]
+	pull_request:
+		branches: [ main ]
+	workflow_dispatch:
+
+jobs:
+	sonarcloud:
+		name: SonarCloud Scan
+		runs-on: ubuntu-latest
+		timeout-minutes: 60
+		steps:
+			- name: Checkout code
+				uses: actions/checkout@v4
+				with:
+					fetch-depth: 0
+
+			- name: Setup Node.js
+				uses: actions/setup-node@v4
+				with:
+					node-version: '18'
+
+			- name: Install client dependencies
+				run: npm ci --prefix client
+
+			- name: Install server dependencies
+				run: npm ci --prefix server
+
+			- name: Run client tests (coverage if available)
+				run: |
+
+					set -e
+					if npm --prefix client run test --if-present -- --coverage --coverageDirectory=client/coverage; then
+						echo "Client tests completed"
+					else
+						echo "No client tests or tests failed — continuing to Sonar scan"
+					fi
+
+			- name: Run server tests (coverage if available)
+				run: |
+					set -e
+					if npm --prefix server run test --if-present -- --coverage --coverageDirectory=server/coverage; then
+						echo "Server tests completed"
+					else
+						echo "No server tests or tests failed — continuing to Sonar scan"
+					fi
+
+			- name: Build client
+				run: npm --prefix client run build --if-present
+
+			- name: Build server (if applicable)
+				run: npm --prefix server run build --if-present
+
+			- name: SonarCloud Scan
+				uses: sonarsource/sonarcloud-github-action@master
+				env:
+					GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+					SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+				with:
+					args: >
+						-Dsonar.organization=ShiivRS331
+						-Dsonar.projectKey=YOUR_SONARCLOUD_PROJECT_KEY
+						-Dsonar.sources=client,server
+						-Dsonar.tests=client/src,server
+						-Dsonar.exclusions=**/node_modules/**,**/dist/**,**/build/**
+						-Dsonar.javascript.lcov.reportPaths=client/coverage/lcov.info,server/coverage/lcov.info
+
+		# Notes:
+		# - Replace YOUR_SONARCLOUD_ORG and YOUR_SONARCLOUD_PROJECT_KEY with your SonarCloud organization and project key.
+		# - Set the repository secret `SONAR_TOKEN` to a SonarCloud token (generated in your SonarCloud account).
+		# - If your test frameworks differ (Vitest/Jest/Mocha), adjust the test commands to generate LCOV at the paths above.
+
