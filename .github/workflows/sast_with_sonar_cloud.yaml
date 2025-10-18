@@ -62,7 +62,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.organization=ShiivRS331
+            -Dsonar.organization=shiivrs331
             -Dsonar.projectKey=220701331-CS19741-CC_ClubVerse
             -Dsonar.sources=client,server
             -Dsonar.tests=client/src,server
