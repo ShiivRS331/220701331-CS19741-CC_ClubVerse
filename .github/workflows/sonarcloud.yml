@@ -49,9 +49,13 @@ jobs:
             -Dsonar.sources=client/src
             -Dsonar.tests=client/src
             -Dsonar.language=js
+<<<<<<< HEAD
             -Dsonar.qualitygate.wait=false
             -Dsonar.host.url=https://sonarcloud.io
         continue-on-error: true
+=======
+            -Dsonar.host.url=https://sonarcloud.io
+>>>>>>> be648a438fb94c8d1d186cf75c56acf6ae9d8447
 
       - name: SonarCloud Scan - server
         uses: sonarsource/sonarcloud-github-action@v1.8
@@ -63,6 +67,10 @@ jobs:
             -Dsonar.sources=server
             -Dsonar.tests=server
             -Dsonar.language=js
+<<<<<<< HEAD
             -Dsonar.qualitygate.wait=false
             -Dsonar.host.url=https://sonarcloud.io
         continue-on-error: true
+=======
+            -Dsonar.host.url=https://sonarcloud.io
+>>>>>>> be648a438fb94c8d1d186cf75c56acf6ae9d8447
