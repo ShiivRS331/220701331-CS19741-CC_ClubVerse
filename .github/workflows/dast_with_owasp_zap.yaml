@@ -30,7 +30,7 @@ jobs:
       - name: Verify client service readiness
         run: |
           for i in {1..10}; do
-            if curl -s http://client:80 > /dev/null; then
+            if curl -s http://localhost:5173/ > /dev/null; then
               echo "Client service is ready.";
               exit 0;
             fi;
