@@ -1,43 +1,35 @@
 name: DAST Scan - OWASP ZAP
 
 on:
-  workflow_dispatch: # manual trigger
+  workflow_dispatch:
   push:
     branches: [ main ]
 
 jobs:
-  zap_scan:
+  dast_scan:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      # Step 1 — Checkout your repo
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      # Optional: Build and start your app (adjust these commands)
-      - name: Set up Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-      - name: Install dependencies and start app
+      # Step 2 — Build and run your app using Docker Compose
+      - name: Start app with Docker Compose
         run: |
-          cd client
-          npm install
-          nohup npm start &
-          cd ../server
-          npm install
-          nohup npm start &
-          sleep 20  # wait for app to start
+          docker-compose up -d
+          echo "Waiting for services to be ready..."
+          sleep 15  # give containers time to start
 
-      # 🧪 Run OWASP ZAP Baseline Scan
+      # Step 3 — Run OWASP ZAP Baseline DAST Scan
       - name: Run OWASP ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.10.0
         with:
-          target: 'http://localhost:3000'  # change to your app URL
-          cmd_options: '-a' # active scan mode
-          allow_issue_writing: false
-          fail_action: false
+          target: 'http://localhost:3000'   # change this if your app runs on another port/service
+          cmd_options: '--network=host -a'  # active scan mode + access host network
+          fail_action: false                # set to true if you want pipeline to fail on high-risk issues
 
-      # 🧾 Upload the scan report
+      # Step 4 — Upload the generated ZAP HTML report as a GitHub artifact
       - name: Upload ZAP Report
         uses: actions/upload-artifact@v4
         with:
