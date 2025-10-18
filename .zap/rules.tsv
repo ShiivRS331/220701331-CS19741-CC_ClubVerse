@@ -5,3 +5,7 @@
 # 10021\tFAIL\t
 
 # Add your rules below
+
+# Custom Rules
+10020	FAIL	X-Content-Type-Options Header Missing
+10015	WARN	Incomplete or No Cache-control and Pragma HTTP Header Set
