@@ -74,7 +74,7 @@ const Clubs = () => {
   useEffect(() => {
     const fetchClubs = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/user/clubs`, {
+  const response = await fetch(`https://server.livelymoss-d77e8dd3.westus2.azurecontainerapps.io/user/clubs`, {
           headers: {
             "Content-Type": "application/json",
             authorization: `bearer ${JSON.parse(localStorage.getItem("token"))}`,

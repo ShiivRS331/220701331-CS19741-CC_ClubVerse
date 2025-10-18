@@ -39,7 +39,7 @@ steps:
 - script: |
     cd terraform
     terraform init
-#    terraform plan # need azure subscription for running this command
+#    terraform plan # need azure subscription and enough credits for running this command
   displayName: 'Terraform plan (demo)'
 
 # --- Docker Build Steps ---
@@ -48,7 +48,7 @@ steps:
     docker build -t clubverse-server:$(Build.BuildId) ./server
   displayName: 'Build Docker images for client and server'
 
-# --- (Optional) Docker Push Steps ---
+# ---  Docker Push Steps ---
 # To enable pushing, set up Docker Hub or ACR credentials as pipeline secrets and uncomment below:
 # - script: |
 #     echo $(DOCKER_PASSWORD) | docker login -u $(DOCKER_USERNAME) --password-stdin

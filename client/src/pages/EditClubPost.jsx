@@ -97,7 +97,7 @@ const EditClubPost = () => {
   useEffect(() => {
     const fetchPostDetails = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/admin/clubPost/${postId}`, {
+  const response = await fetch(`https://server.livelymoss-d77e8dd3.westus2.azurecontainerapps.io/admin/clubPost/${postId}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -169,7 +169,7 @@ const EditClubPost = () => {
     console.log('Updating post with data:', updateData);
     
     try {
-      const response = await fetch(`http://localhost:5000/admin/update/${postId}`, {
+  const response = await fetch(`https://server.livelymoss-d77e8dd3.westus2.azurecontainerapps.io/admin/update/${postId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -119,7 +119,7 @@ const Signup = () => {
     };
     console.log(userData);
 
-let result = await fetch("http://localhost:5000/register", {
+let result = await fetch("https://server.livelymoss-d77e8dd3.westus2.azurecontainerapps.io/register", {
   method: "post",
   body: JSON.stringify(userData),
   headers: { 'Content-Type': 'application/json' }

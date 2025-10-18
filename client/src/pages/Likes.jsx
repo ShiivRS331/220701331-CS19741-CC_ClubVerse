@@ -87,7 +87,7 @@ const Likes = () => {
     const fetchLikedPosts = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/user/posts/like/${userID}`,
+          `https://server.livelymoss-d77e8dd3.westus2.azurecontainerapps.io/user/posts/like/${userID}`,
           {
             headers: {
               "Content-Type": "application/json",

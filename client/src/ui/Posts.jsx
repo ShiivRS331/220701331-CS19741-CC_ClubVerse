@@ -160,7 +160,7 @@ const Posts = ({
   const fetchComments = async () => {
     try {
       const response = await fetch(
-        `http://localhost:5000/user/comment/getComments/${id}`,
+  `https://server.livelymoss-d77e8dd3.westus2.azurecontainerapps.io/user/comment/getComments/${id}`,
         {
           headers: {
             "Content-Type": "application/json",
@@ -196,7 +196,7 @@ const Posts = ({
 
     try {
       const response = await fetch(
-        `http://localhost:5000/user/comment/addComment/${id}`,
+  `https://server.livelymoss-d77e8dd3.westus2.azurecontainerapps.io/user/comment/addComment/${id}`,
         {
           method: "POST",
           headers: {
@@ -230,7 +230,7 @@ const Posts = ({
 
     try {
       const response = await fetch(
-        `http://localhost:5000/user/comment/deleteComment/${commentId}`,
+  `https://server.livelymoss-d77e8dd3.westus2.azurecontainerapps.io/user/comment/deleteComment/${commentId}`,
         {
           method: "DELETE",
           headers: {
@@ -276,7 +276,7 @@ const Posts = ({
     const postID = id;
 
     try {
-      const response = await fetch("http://localhost:5000/user/userLike", {
+  const response = await fetch("https://server.livelymoss-d77e8dd3.westus2.azurecontainerapps.io/user/userLike", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -304,7 +304,7 @@ const Posts = ({
     const postID = id;
 
     try {
-      const response = await fetch("http://localhost:5000/user/saveUserPost", {
+  const response = await fetch("https://server.livelymoss-d77e8dd3.westus2.azurecontainerapps.io/user/saveUserPost", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

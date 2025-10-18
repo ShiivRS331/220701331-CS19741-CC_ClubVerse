@@ -192,6 +192,7 @@ const ErrorMessage = styled.div`
 
 const AIChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
+  // Only user/assistant messages, do not pre-populate with assistant
   const [messages, setMessages] = useState([]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -220,7 +221,7 @@ const AIChatbot = () => {
 
     try {
       // Call backend AI chat endpoint
-      const response = await fetch('http://localhost:5000/user/ai-chat', {
+  const response = await fetch('https://server.livelymoss-d77e8dd3.westus2.azurecontainerapps.io/user/ai-chat', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -264,12 +265,7 @@ const AIChatbot = () => {
 
   const toggleChat = () => {
     setIsOpen(!isOpen);
-    if (!isOpen && messages.length === 0) {
-      setMessages([{
-        text: "Hello! I'm your AI assistant. How can I help you with ClubVerse today?",
-        isUser: false
-      }]);
-    }
+    // Do not pre-populate with assistant message; show welcome in UI only
   };
 
   return (
@@ -289,23 +285,21 @@ const AIChatbot = () => {
 
           <ChatBody>
             <MessagesContainer>
-              {messages.length === 0 ? (
+              {messages.length === 0 && (
                 <WelcomeMessage>
-                  Welcome! I'm here to help you with any questions about ClubVerse.
+                  Hello! I'm your AI assistant. How can I help you with ClubVerse today?
                 </WelcomeMessage>
-              ) : (
-                messages.map((message, index) => (
-                  <Message key={index} isUser={message.isUser}>
-                    <MessageBubble
-                      isUser={message.isUser}
-                      dangerouslySetInnerHTML={!message.isUser ? { __html: message.text } : undefined}
-                    >
-                      {message.isUser ? message.text : null}
-                    </MessageBubble>
-
-                  </Message>
-                ))
               )}
+              {messages.map((message, index) => (
+                <Message key={index} isUser={message.isUser}>
+                  <MessageBubble
+                    isUser={message.isUser}
+                    dangerouslySetInnerHTML={!message.isUser ? { __html: message.text } : undefined}
+                  >
+                    {message.isUser ? message.text : null}
+                  </MessageBubble>
+                </Message>
+              ))}
               {isLoading && (
                 <Message isUser={false}>
                   <MessageBubble isUser={false}>

@@ -97,7 +97,7 @@ const Login = () => {
     console.log("Login data:", {email, password, role});
     
     try {
-      let result = await fetch("http://localhost:5000/login",{
+  let result = await fetch("https://server.livelymoss-d77e8dd3.westus2.azurecontainerapps.io/login",{
               method:"post",
               body:JSON.stringify({email,password,role}),
               headers:{'Content-Type': 'application/json'}

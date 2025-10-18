@@ -43,7 +43,7 @@ function Dashboard() {
     const fetchUserDetails = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/user/getUserDetails/like/save?userID=${userID}`,
+          `https://server.livelymoss-d77e8dd3.westus2.azurecontainerapps.io/user/getUserDetails/like/save?userID=${userID}`,
           {
             headers: {
               "Content-Type": "application/json",
@@ -76,7 +76,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:5000/user/clubPosts", {
+  const response = await fetch("https://server.livelymoss-d77e8dd3.westus2.azurecontainerapps.io/user/clubPosts", {
           headers: {
             "Content-Type": "application/json",
             authorization: `bearer ${JSON.parse(localStorage.getItem("token"))}`,

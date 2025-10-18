@@ -85,7 +85,7 @@ const Saved = () => {
     const fetchLikedPosts = async () => {
       try {
         const response = await fetch(
-          `http://localhost:5000/user/posts/save/${userID}`,
+          `https://server.livelymoss-d77e8dd3.westus2.azurecontainerapps.io/user/posts/save/${userID}`,
           {
             headers: {
               "Content-Type": "application/json",
