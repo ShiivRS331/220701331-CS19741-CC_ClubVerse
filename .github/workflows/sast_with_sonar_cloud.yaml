@@ -64,8 +64,8 @@ jobs:
           args: >
             -Dsonar.organization=shiivrs331
             -Dsonar.projectKey=220701331-CS19741-CC_ClubVerse
-            -Dsonar.sources=client,server
-            -Dsonar.tests=client/src,server
+            -Dsonar.sources=client/src,server/src 
+            -Dsonar.tests=client/src/__tests__,server/test 
             -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/build/**
             -Dsonar.javascript.lcov.reportPaths=client/coverage/lcov.info,server/coverage/lcov.info
 
