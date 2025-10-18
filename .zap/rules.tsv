@@ -1,0 +1,7 @@
+# OWASP ZAP Rules File
+# Format: <rule_id>\t<action>\t<parameter>
+# Example:
+# 10020\tIGNORE\t
+# 10021\tFAIL\t
+
+# Add your rules below
