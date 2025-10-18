@@ -55,21 +55,22 @@ jobs:
       - name: Build server (if applicable)
         run: npm --prefix server run build --if-present
 
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.organization=ShiivRS331
-            -Dsonar.projectKey=220701331-CS19741-CC_ClubVerse
-            -Dsonar.sources=client,server
-            -Dsonar.tests=client/src,server
-            -Dsonar.exclusions=**/node_modules/**,**/dist/**,**/build/**
-            -Dsonar.javascript.lcov.reportPaths=client/coverage/lcov.info,server/coverage/lcov.info
+			- name: SonarCloud Scan
+				uses: sonarsource/sonarcloud-github-action@master
+				env:
+					GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+					SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+				with:
+					args: >
+						-Dsonar.organization=ShiivRS331
+						-Dsonar.projectKey=YOUR_SONARCLOUD_PROJECT_KEY
+						-Dsonar.sources=client,server
+						-Dsonar.tests=client/src,server
+						-Dsonar.exclusions=**/node_modules/**,**/dist/**,**/build/**
+						-Dsonar.javascript.lcov.reportPaths=client/coverage/lcov.info,server/coverage/lcov.info
 
-    # Notes:
-    # - Replace YOUR_SONARCLOUD_ORG and YOUR_SONARCLOUD_PROJECT_KEY with your SonarCloud organization and project key.
-    # - Set the repository secret `SONAR_TOKEN` to a SonarCloud token (generated in your SonarCloud account).
-    # - If your test frameworks differ (Vitest/Jest/Mocha), adjust the test commands to generate LCOV at the paths above.
+		# Notes:
+		# - Replace YOUR_SONARCLOUD_ORG and YOUR_SONARCLOUD_PROJECT_KEY with your SonarCloud organization and project key.
+		# - Set the repository secret `SONAR_TOKEN` to a SonarCloud token (generated in your SonarCloud account).
+		# - If your test frameworks differ (Vitest/Jest/Mocha), adjust the test commands to generate LCOV at the paths above.
+
