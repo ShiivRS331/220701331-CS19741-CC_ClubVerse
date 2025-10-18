@@ -26,6 +26,20 @@ jobs:
           sleep 25
           docker ps -a
 
+      # Verify client service readiness
+      - name: Verify client service readiness
+        run: |
+          for i in {1..10}; do
+            if curl -s http://client:80 > /dev/null; then
+              echo "Client service is ready.";
+              exit 0;
+            fi;
+            echo "Waiting for client service to be ready...";
+            sleep 5;
+          done;
+          echo "Client service is not ready.";
+          exit 1;
+
       # Run OWASP ZAP Baseline Scan
       - name: Run OWASP ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.10.0
@@ -33,7 +47,7 @@ jobs:
           target: "http://client:80"              # internal container URL
           rules_file_name: ".zap/rules.tsv"
           cmd_options: "-a -r report_html.html -J report_json.json -w report_md.md"
-          extra_docker_args: "--network=clubverse_net"
+          docker_name: "clubverse_net"
 
       # Upload reports
       - name: Upload ZAP Reports
