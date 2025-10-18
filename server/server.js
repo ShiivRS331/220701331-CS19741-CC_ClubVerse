@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
@@ -8,15 +7,11 @@ const path = require('path');
 const { GoogleGenerativeAI } = require('@google/generative-ai'); // Import Gemini SDK
 const app = express();
 
-// Restrict CORS to the frontend client URL (set CLIENT_URL in env or default to localhost)
-const CLIENT_URL = process.env.CLIENT_URL || 'http://localhost:5173';
-app.use(cors({ origin: CLIENT_URL }));
-// allow preflight for complex requests
-app.options('*', cors({ origin: CLIENT_URL }));
+app.use(cors());
 app.use(express.json());
 
-// Secret key for JWT (use environment variable in production)
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key-change-in-production';
+// Secret key for JWT (in production, use environment variable)
+const JWT_SECRET = 'your-secret-key-change-in-production';
 
 // Database file paths
 const USERS_FILE = path.join(__dirname, 'data', 'users.json');
@@ -31,41 +26,7 @@ if (!fs.existsSync(path.join(__dirname, 'data'))) {
   fs.mkdirSync(path.join(__dirname, 'data'));
 }
 
-
-// --- Azure SQL Setup (for future use) ---
-// const sql = require('mssql');
-// const sqlConfig = {
-//   user: process.env.AZURE_SQL_USER,
-//   password: process.env.AZURE_SQL_PASSWORD,
-//   database: process.env.AZURE_SQL_DATABASE,
-//   server: process.env.AZURE_SQL_SERVER,
-//   pool: {
-//     max: 10,
-//     min: 0,
-//     idleTimeoutMillis: 30000
-//   },
-//   options: {
-//     encrypt: true, // for Azure
-//     trustServerCertificate: false // change to true for local dev / self-signed certs
-//   }
-// };
-// async function getUsersFromAzureSQL() {
-//   try {
-//     await sql.connect(sqlConfig);
-//     const result = await sql.query`SELECT * FROM Users`;
-//     return result.recordset;
-//   } catch (err) {
-//     console.error('Azure SQL error:', err);
-//     return [];
-//   }
-// }
-// Example usage in an endpoint:
-// app.get('/azure/users', async (req, res) => {
-//   const users = await getUsersFromAzureSQL();
-//   res.json(users);
-// });
-
-// Load data from files (current dummy DB)
+// Load data from files
 let users = [];
 let admins = [];
 let likes = [];
@@ -158,11 +119,8 @@ const saveComments = () => {
   fs.writeFileSync(COMMENTS_FILE, JSON.stringify(comments, null, 2));
 };
 
-// Security key for admin creation (use environment variable in production)
-const ADMIN_SECURITY_KEY = process.env.ADMIN_SECURITY_KEY || 'admin-secret-key-2024';
-if (!process.env.ADMIN_SECURITY_KEY) {
-  console.warn('Warning: ADMIN_SECURITY_KEY not set. Using default insecure key. Set ADMIN_SECURITY_KEY in environment for production.');
-}
+// Security key for admin creation (in production, use environment variable)
+const ADMIN_SECURITY_KEY = 'admin-secret-key-2024';
 
 // Middleware to verify JWT token
 const authenticateToken = (req, res, next) => {
